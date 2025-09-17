@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  root to: "photos#index"
+  root to: "pages#index"
   # Routes for the Follow request resource:
 
   # CREATE
