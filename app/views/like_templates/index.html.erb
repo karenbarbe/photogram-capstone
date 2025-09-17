@@ -1,0 +1,51 @@
+<h1>
+  List of all likes
+</h1>
+
+<hr>
+
+<article>
+  <header>
+    <h2>
+      Add a new like
+    </h2>
+  </header>
+
+  <form action="/insert_like" method="post">
+    <div>
+      <label for="photo_id_box">
+        Photo
+      </label>
+
+      <input type="text" id="photo_id_box" name="query_photo_id">
+    </div>
+
+    <div>
+      <label for="fan_id_box">
+        Fan
+      </label>
+
+      <input type="text" id="fan_id_box" name="query_fan_id">
+    </div>
+
+    <button type="submit">
+      Create like
+    </button>
+  </form>
+</article>
+
+<hr>
+
+<article>
+  <ul>
+    <% @list_of_likes.each do |a_like| %>
+      <li>
+        <a href="/likes/<%= a_like.id %>">
+          Like #<%= a_like.id %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</article>
+
+<hr>
