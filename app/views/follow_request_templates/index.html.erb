@@ -1,0 +1,59 @@
+<h1>
+  List of all follow requests
+</h1>
+
+<hr>
+
+<article>
+  <header>
+    <h2>
+      Add a new follow request
+    </h2>
+  </header>
+
+  <form action="/insert_follow_request" method="post">
+    <div>
+      <label for="recipient_id_box">
+        Recipient
+      </label>
+
+      <input type="text" id="recipient_id_box" name="query_recipient_id">
+    </div>
+
+    <div>
+      <label for="sender_id_box">
+        Sender
+      </label>
+
+      <input type="text" id="sender_id_box" name="query_sender_id">
+    </div>
+
+    <div>
+      <label for="status_box">
+        Status
+      </label>
+
+      <input type="text" id="status_box" name="query_status">
+    </div>
+
+    <button type="submit">
+      Create follow request
+    </button>
+  </form>
+</article>
+
+<hr>
+
+<article>
+  <ul>
+    <% @list_of_follow_requests.each do |a_follow_request| %>
+      <li>
+        <a href="/follow_requests/<%= a_follow_request.id %>">
+          Follow request #<%= a_follow_request.id %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</article>
+
+<hr>
