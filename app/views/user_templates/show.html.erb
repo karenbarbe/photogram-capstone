@@ -1,3 +1,47 @@
-<h1>
-  <%= @matching_user.username %>
-</h1>
+<nav>
+  <ul>
+    <li>
+      <a href="/users/<%= @matching_user.username %>">Profile</a>
+    </li>
+    <li>
+      <a href="/users/<%= @matching_user.username %>/own_photos">Own photos</a>
+    </li>
+    <li>
+      <a href="/users/<%= @matching_user.username %>/liked_photos">Liked photos</a>
+    </li>
+    <li>
+      <a href="/users/<%= @matching_user.username %>/feed">Feed</a>
+    </li>
+    <li>
+      <a href="/users/<%= @matching_user.username %>/discover">Discover</a>
+    </li>
+  </ul>
+</nav>
+
+<article>
+  <header>
+    <h2><%= @matching_user.username %></h2>
+  </header>
+
+  <dl>
+    <dt>Private</dt>
+    <dd><%= @matching_user.private %></dd>
+
+    <dt>Followers</dt>
+    <dd>
+      <%= @matching_user.received_follow_requests.count %>
+
+
+      <form action="/insert_follow_request" method="post">
+        <input type="hidden" name="query_recipient_id" value="<%= @matching_user.id %>">
+
+        <button type="submit">
+          Follow
+        </button>
+      </form>
+    </dd>
+
+    <dt>Following</dt>
+    <dd><%= @matching_user.sent_follow_requests.count %></dd>
+  </dl>
+</article>
