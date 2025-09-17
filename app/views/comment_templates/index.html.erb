@@ -1,0 +1,59 @@
+<h1>
+  List of all comments
+</h1>
+
+<hr>
+
+<article>
+  <header>
+    <h2>
+      Add a new comment
+    </h2>
+  </header>
+
+  <form action="/insert_comment" method="post">
+    <div>
+      <label for="body_box">
+        Body
+      </label>
+
+      <input type="text" id="body_box" name="query_body">
+    </div>
+
+    <div>
+      <label for="photo_id_box">
+        Photo
+      </label>
+
+      <input type="text" id="photo_id_box" name="query_photo_id">
+    </div>
+
+    <div>
+      <label for="author_id_box">
+        Author
+      </label>
+
+      <input type="text" id="author_id_box" name="query_author_id">
+    </div>
+
+    <button type="submit">
+      Create comment
+    </button>
+  </form>
+</article>
+
+<hr>
+
+<article>
+  <ul>
+    <% @list_of_comments.each do |a_comment| %>
+      <li>
+        <a href="/comments/<%= a_comment.id %>">
+          Comment #<%= a_comment.id %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</article>
+
+<hr>
