@@ -2,6 +2,11 @@ Rails.application.routes.draw do
   devise_for :users
 
   root to: "pages#index"
+
+  # Routes for Users
+
+  get("/users", { :controller => "users", :action => "index" })
+
   # Routes for the Follow request resource:
 
   # CREATE
