@@ -25,6 +25,59 @@
   </head>
 
   <body class="pico">
+    <header>
+      <div class="container-two-thirds">
+        <nav>
+          <ul>
+            <li>
+              <a href="/">
+                <strong>Photogram</strong>
+              </a>
+            </li>
+
+            <li>
+              <a href="/users">
+                All users
+              </a>
+            </li>
+
+            <li>
+              <a href="/photos">
+                All public photos
+              </a>
+            </li>
+          </ul>
+
+          <ul>
+            <% if current_user == nil %>
+              <li>
+                <a href="/users/sign_in">
+                  Sign in
+                </a>
+              </li>
+
+              <li>
+                <a href="/users/sign_up">
+                  Sign up
+                </a>
+              </li>
+            <% else %>
+
+              <li>
+                <a href="/users/edit">
+                  <%= current_user.username %>
+                </a>
+              </li>
+              <li>
+                <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+              </li>
+            <% end %>
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
     <main>
       <div class="container-two-thirds">
         <% if notice %>
