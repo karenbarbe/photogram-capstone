@@ -22,6 +22,9 @@
 
       <tbody>
         <% @users.each do |user| %>
+          <%# Find an existing follow request between current user and this user %>
+          <% existing_request = user.received_follow_requests.find_by(sender: current_user) %>
+
           <tr>
             <td>
               <%= user.username %>
@@ -33,20 +36,33 @@
 
             <td>
 
-              <% if %>
-                              
-                <form action="/insert_follow_request" method="post">
-                  <input type="hidden" name="query_recipient_id" value="<%= user.id %>">
-                  <button type="submit">Follow</button>
-                </form>
+              <% if user.private %>
+                <%# Private user %>
+                <% if existing_request && existing_request.status == "pending" %>
+                  Request sent. <a href="/delete_follow_request/<%= existing_request.id %>">Cancel</a>
+
+                <% elsif existing_request && existing_request.status == "accepted" %>
+                  <a href="/delete_follow_request/<%= existing_request.id %>">Unfollow</a>
+                <% else%>
+                  <form action="/insert_follow_request" method="post">
+                    <input type="hidden" name="query_recipient_id" value="<%= user.id %>">
+                    <button type="submit">Follow</button>
+                  </form>
+                <% end %>
 
               <%  else %>
-                <form action="/insert_follow_request" method="post">
-                  <input type="hidden" name="query_recipient_id" value="<%= user.id %>">
-                  <button type="submit">Follow</button>
-                </form>
+                <%# Public user %>
+                <% if existing_request && existing_request.status == "accepted" %>
+                    <a href="/delete_follow_request/<%= existing_request.id %>">Unfollow</a>
+                <% else%>
+                  <form action="/insert_follow_request" method="post">
+                    <input type="hidden" name="query_recipient_id" value="<%= user.id %>">
+                    <button type="submit">Follow</button>
+                  </form>
+                <% end %>
+
               <% end %>
-              
+
             </td>
 
             <td>
