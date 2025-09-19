@@ -1,22 +1,4 @@
-<nav>
-  <ul>
-    <li>
-      <a href="/users/<%= @matching_user.username %>">Profile</a>
-    </li>
-    <li>
-      <a href="/users/<%= @matching_user.username %>/own_photos">Own photos</a>
-    </li>
-    <li>
-      <a href="/users/<%= @matching_user.username %>/liked_photos">Liked photos</a>
-    </li>
-    <li>
-      <a href="/users/<%= @matching_user.username %>/feed">Feed</a>
-    </li>
-    <li>
-      <a href="/users/<%= @matching_user.username %>/discover">Discover</a>
-    </li>
-  </ul>
-</nav>
+<%= render "user_templates/user_navbar", user: @matching_user %>
 
 <article>
   <header>
