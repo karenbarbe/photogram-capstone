@@ -31,4 +31,5 @@ class User < ApplicationRecord
   has_many :comments, foreign_key: "author_id", dependent: :destroy
   has_many :likes, foreign_key: "fan_id", dependent: :destroy
   has_many :photos, foreign_key: "owner_id", dependent: :destroy
+  has_many :liked_photos, through: :likes, source: :photo
 end

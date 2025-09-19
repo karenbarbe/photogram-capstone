@@ -16,14 +16,23 @@ class UsersController < ApplicationController
   end
 
   def own_photos
-    the_username = params.fetch("path_username")
-    @matching_user = User.where({ :username => the_username }).first
-    @own_photos = @matching_user.photos
+    @own_photos = find_matching_user.photos
 
     render({ :template => "user_templates/own_photos" })
   end
 
+  def liked_photos
+    @liked_photos = find_matching_user.liked_photos
+
+    render({ :template => "user_templates/liked_photos" })
+  end
+
   private
+
+  def find_matching_user
+    the_username = params.fetch("path_username")
+    @matching_user = User.where({ :username => the_username }).first
+  end
 
   def user_can_view_profile?(target_user)
     # User can view if:

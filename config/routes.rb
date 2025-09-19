@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get("/users", { :controller => "users", :action => "index" })
   get("/users/:path_username", { :controller => "users", :action => "show" })
   get("/users/:path_username/own_photos", { :controller => "users", :action => "own_photos" })
+  get("/users/:path_username/liked_photos", { :controller => "users", :action => "liked_photos" })
   get("/users/:path_username/feed", { :controller => "users", :action => "feed" })
   get("/users/:path_username/discover", { :controller => "users", :action => "discover" })
 
