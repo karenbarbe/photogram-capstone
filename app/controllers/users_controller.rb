@@ -15,6 +15,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def own_photos
+    the_username = params.fetch("path_username")
+    @matching_user = User.where({ :username => the_username }).first
+    @own_photos = @matching_user.photos
+
+    render({ :template => "user_templates/own_photos" })
+  end
+
   private
 
   def user_can_view_profile?(target_user)
