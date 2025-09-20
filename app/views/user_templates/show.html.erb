@@ -13,7 +13,6 @@
     <dd>
       <%= @matching_user.received_follow_requests.count %>
 
-
       <form action="/insert_follow_request" method="post">
         <input type="hidden" name="query_recipient_id" value="<%= @matching_user.id %>">
 
@@ -26,4 +25,33 @@
     <dt>Following</dt>
     <dd><%= @matching_user.sent_follow_requests.count %></dd>
   </dl>
+</article>
+
+<article>
+  <header>
+    <h4>Pending follow requests</h4>
+  </header>
+
+  <ul>
+    <li>
+      drew
+
+      <form action="/modify_follow_request/1815" method="post">
+        <input name="query_status" value="accepted" type="hidden">
+
+        <button type="submit">
+          Accept
+        </button>
+      </form>
+
+      <form action="/modify_follow_request/1815" method="post">
+        <input name="query_status" value="rejected" type="hidden">
+
+        <button type="submit">
+          Reject
+        </button>
+      </form>
+    </li>
+
+  </ul>
 </article>
