@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action(:authenticate_user!, { :only => [ :index ] })
   before_action :find_matching_user, only: [ :show, :own_photos, :liked_photos, :feed, :discover ]
 
   def index
