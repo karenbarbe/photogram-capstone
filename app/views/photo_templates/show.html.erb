@@ -9,7 +9,7 @@
       Image
     </dt>
     <dd>
-      <%= @the_photo.image %>
+      <img src="<%= @the_photo.image %>" alt="Photo from user <%= @the_photo.owner.username %>">
     </dd>
 
     <dt>
@@ -62,7 +62,7 @@
         <button type="submit">Like</button>
       </form>
     </dd>
-    <% if current_user %>
+    <% if current_user && @the_photo.owner == current_user %>
 
       <dt>Edit photo</dt>
       <dd>
