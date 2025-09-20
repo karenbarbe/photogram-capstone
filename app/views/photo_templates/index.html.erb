@@ -2,7 +2,28 @@
   <header>
     <h2>Add a new photo</h2>
   </header>
-  <p>To add a photo, you must <a href="/users/sign_in">sign in</a> first.</p>
+  <% if current_user == nil %>
+    <p>To add a photo, you must <a href="/users/sign_in">sign in</a> first.</p>
+  <% else %>
+    <form action="/insert_photo" method="post" class="form-horizontal" enctype="multipart/form-data">
+
+      <label for="browser_input_image">
+        Image
+      </label>
+
+      <input type="file" id="browser_input_image" name="query_image" placeholder="Enter URL for the image..." class="form-control" required="">
+
+      <label for="caption_box">
+        Caption
+      </label>
+
+      <textarea id="caption_box" name="query_caption" rows="2" placeholder="Enter a caption for the photo"></textarea>
+
+      <button type="submit">
+        Add photo
+      </button>
+    </form>
+  <% end %>
 </article>
 
 <article>
