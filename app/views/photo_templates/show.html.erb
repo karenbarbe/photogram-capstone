@@ -62,6 +62,29 @@
         <button type="submit">Like</button>
       </form>
     </dd>
+    <% if current_user %>
+
+      <dt>Edit photo</dt>
+      <dd>
+        <form action="/modify_photo/<%= @the_photo.id %>" method="post">
+          <label for="browser_image">Image URL</label>
+          <input id="browser_image" type="text" name="query_image" placeholder="Enter a URL for the image..." value="<%= @the_photo.image %>">
+
+          <label for="browser_caption">Caption</label>
+          <textarea id="browser_caption" name="query_caption" placeholder="Enter a caption for the photo..."><%= @the_photo.caption %>
+</textarea>
+
+          <button type="submit">Update photo</button>
+        </form>
+      </dd>
+      <dt>Delete photo</dt>
+      <dd>
+        <a href="/delete_photo/<%= @the_photo.id %>">
+          Delete this photo
+        </a>
+      </dd>
+    <% end %>
+
   </dl>
 </article>
 
@@ -81,19 +104,19 @@
       </thead>
       <tbody>
         <% @the_photo.comments.each do |comment| %>
-        <tr>
-          <td>
-            <%= comment.author.username %>
-          </td>
+          <tr>
+            <td>
+              <%= comment.author.username %>
+            </td>
 
-          <td>
-            <%= comment.body %>
-          </td>
+            <td>
+              <%= comment.body %>
+            </td>
 
-          <td>
-            <%= time_ago_in_words(comment.created_at) %> ago
-          </td>
-        </tr>
+            <td>
+              <%= time_ago_in_words(comment.created_at) %> ago
+            </td>
+          </tr>
         <% end %>
 
       </tbody>
