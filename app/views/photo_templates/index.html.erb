@@ -1,75 +1,61 @@
-<h1>
-  List of all photos
-</h1>
-
-<hr>
+<article>
+  <header>
+    <h2>Add a new photo</h2>
+  </header>
+  <p>To add a photo, you must <a href="/users/sign_in">sign in</a> first.</p>
+</article>
 
 <article>
   <header>
-    <h2>
-      Add a new photo
-    </h2>
+    <h2>List of all public photos</h2>
   </header>
 
-  <form action="/insert_photo" method="post">
-    <div>
-      <label for="caption_box">
-        Caption
-      </label>
+  <div class="overflow-auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Caption</th>
+          <th>Owner</th>
+          <th>Posted</th>
+          <th>Likes</th>
+          <th>Details page</th>
+        </tr>
+      </thead>
 
-      <input type="text" id="caption_box" name="query_caption">
-    </div>
+      <tbody>
+        <% @public_photos.each do |photo| %>
+          <tr>
+            <td>
+              <img src="<%= photo.image%>" class="img-responsive">
+            </td>
 
-    <div>
-      <label for="image_box">
-        Image
-      </label>
+            <td>
+              <%= photo.caption %>
+            </td>
 
-      <input type="text" id="image_box" name="query_image">
-    </div>
+            <td>
+              <%= photo.owner.username %>
+            </td>
 
-    <div>
-      <label for="owner_id_box">
-        Owner
-      </label>
+            <td>
+              <%= time_ago_in_words(photo.created_at) %> ago
+            </td>
 
-      <input type="text" id="owner_id_box" name="query_owner_id">
-    </div>
+            <td>
+              <%= photo.likes_count %>
+            </td>
 
-    <div>
-      <label for="likes_count_box">
-        Likes count
-      </label>
+            <td>
+              <a href="/photos/<%= photo.id %>">
+                Show details
+              </a>
+            </td>
 
-      <input type="text" id="likes_count_box" name="query_likes_count">
-    </div>
+          </tr>
+        <% end %>
 
-    <div>
-      <label for="comments_count_box">
-        Comments count
-      </label>
-
-      <input type="text" id="comments_count_box" name="query_comments_count">
-    </div>
-
-    <button type="submit">
-      Create photo
-    </button>
-  </form>
+      </tbody>
+    </table>
+  </div>
 </article>
-
-<hr>
-
-<article>
-  <ul>
-    <% @list_of_photos.each do |a_photo| %>
-      <li>
-        <a href="/photos/<%= a_photo.id %>">
-          Photo #<%= a_photo.id %>
-        </a>
-      </li>
-    <% end %>
-  </ul>
-</article>
-
-<hr>
