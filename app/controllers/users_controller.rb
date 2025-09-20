@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @pending_requests = @matching_user.received_follow_requests.where({ :status => "pending" })
     if @matching_user.private? && !user_can_view_profile?(@matching_user)
       redirect_to("/users", { :alert => "You're not authorized for that." })
     else

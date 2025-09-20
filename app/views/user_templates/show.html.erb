@@ -33,10 +33,11 @@
   </header>
 
   <ul>
-    <li>
-      drew
+    <% @pending_requests.each do |request| %>
 
-      <form action="/modify_follow_request/1815" method="post">
+    <li>
+      <%= request.sender.username %>
+      <form action="/modify_follow_request/<%= request.id %>" method="post">
         <input name="query_status" value="accepted" type="hidden">
 
         <button type="submit">
@@ -44,7 +45,7 @@
         </button>
       </form>
 
-      <form action="/modify_follow_request/1815" method="post">
+      <form action="/modify_follow_request/<%= request.id %>" method="post">
         <input name="query_status" value="rejected" type="hidden">
 
         <button type="submit">
@@ -52,6 +53,7 @@
         </button>
       </form>
     </li>
+    <% end %>
 
   </ul>
 </article>
