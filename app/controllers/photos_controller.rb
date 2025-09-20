@@ -17,6 +17,8 @@ class PhotosController < ApplicationController
 
     @the_photo = matching_photos.at(0)
 
+     @like_by_current_user = Like.where({ :fan_id => current_user.id }).first
+
     render({ :template => "photo_templates/show" })
   end
 
