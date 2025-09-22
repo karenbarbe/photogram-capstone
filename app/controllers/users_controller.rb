@@ -29,23 +29,30 @@ class UsersController < ApplicationController
   end
 
   def feed
-    @feed = @matching_user.feed_photos.order(created_at: :desc)
+   @followed_users = get_followed_user_ids
+   @feed = Photo.where(owner_id: @followed_users).order(created_at: :desc)
 
     render({ :template => "user_templates/feed" })
   end
 
   def discover
-    followed_user_ids = @matching_user.followed_users.pluck(:id)
-    discoverable_users = User.where.not(id: followed_user_ids)
-                          .where.not(id: @matching_user.id)
-                          .where(private: false)
-    @discover = Photo.where(owner_id: discoverable_users.pluck(:id))
-                    .order(created_at: :desc)
+    @followed_users = get_followed_user_ids
+
+    @discover = Photo.joins(:likes)
+                  .where(likes: { fan_id: @followed_users })
+                  .distinct
+                  .order(created_at: :desc)
+
 
     render({ :template => "user_templates/discover" })
   end
 
   private
+
+  def get_followed_user_ids
+    FollowRequest.where(status: "accepted", sender_id: current_user.id)
+              .pluck(:recipient_id)
+  end
 
   def find_matching_user
     the_username = params.fetch("path_username")
