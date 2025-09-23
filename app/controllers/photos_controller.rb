@@ -13,9 +13,7 @@ class PhotosController < ApplicationController
   def show
     the_id = params.fetch("path_id")
 
-    matching_photos = Photo.where({ :id => the_id })
-
-    @the_photo = matching_photos.at(0)
+    @the_photo = Photo.includes(comments: :author).find(the_id)
 
      @like_by_current_user = Like.where({ :fan_id => current_user.id }).first
 
@@ -54,7 +52,7 @@ class PhotosController < ApplicationController
 
   def destroy
     the_id = params.fetch("path_id")
-    the_photo = Photo.where({ :id => the_id }).at(0)
+    the_photo = Photo.find(the_id)
 
     the_photo.destroy
 
