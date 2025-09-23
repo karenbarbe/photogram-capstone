@@ -18,19 +18,19 @@ class UsersController < ApplicationController
   end
 
   def own_photos
-    @own_photos = @matching_user.photos
+    @own_photos = @matching_user.photos.includes([ :owner ])
 
     render({ :template => "user_templates/own_photos" })
   end
 
   def liked_photos
-    @liked_photos = @matching_user.liked_photos
+    @liked_photos = @matching_user.liked_photos.includes([ :owner ])
 
     render({ :template => "user_templates/liked_photos" })
   end
 
   def feed
-   @feed = Photo.where(owner_id: @followed_users_ids).order(created_at: :desc)
+   @feed = Photo.where(owner_id: @followed_users_ids).includes([ :owner ]).order(created_at: :desc)
 
     render({ :template => "user_templates/feed" })
   end
@@ -38,6 +38,7 @@ class UsersController < ApplicationController
   def discover
     @discover = Photo.joins(:likes)
                   .where(likes: { fan_id: @followed_users_ids })
+                  .includes([ :owner ])
                   .distinct
                   .order(created_at: :desc)
 
