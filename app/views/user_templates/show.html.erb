@@ -11,20 +11,23 @@
 
     <dt>Followers</dt>
     <dd>
-      <%= @matching_user.received_follow_requests.count %>
+      <%= @matching_user.received_follow_requests.where(status: "accepted").count %>
 
-      <% if %>
-        <a href="/delete_follow_request/1867">Unfollow</a>
-      <% else %>
+      <% unless current_user == @matching_user %>
 
-        <form action="/insert_follow_request" method="post">
-          <input type="hidden" name="query_recipient_id" value="<%= @matching_user.id %>">
+        <% if @followed_users_ids.include?(@matching_user.id) %>
+          <a href="/delete_follow_request/<%= @matching_user.id %>">Unfollow</a>
+        <% else %>
 
-          <button type="submit">
-            Follow
-          </button>
-        </form>
+          <form action="/insert_follow_request" method="post">
+            <input type="hidden" name="query_recipient_id" value="<%= @matching_user.id %>">
 
+            <button type="submit">
+              Follow
+            </button>
+          </form>
+
+        <% end%>
       <% end%>
 
     </dd>
@@ -35,35 +38,35 @@
 </article>
 
 <% if current_user == @matching_user %>
-<article>
-  <header>
-    <h4>Pending follow requests</h4>
-  </header>
+  <article>
+    <header>
+      <h4>Pending follow requests</h4>
+    </header>
 
-  <ul>
-    <% @pending_requests.each do |request| %>
+    <ul>
+      <% @pending_requests.each do |request| %>
 
-      <li>
-        <%= request.sender.username %>
-        <form action="/modify_follow_request/<%= request.id %>" method="post">
-          <input name="query_status" value="accepted" type="hidden">
+        <li>
+          <%= request.sender.username %>
+          <form action="/modify_follow_request/<%= request.id %>" method="post">
+            <input name="query_status" value="accepted" type="hidden">
 
-          <button type="submit">
-            Accept
-          </button>
-        </form>
+            <button type="submit">
+              Accept
+            </button>
+          </form>
 
-        <form action="/modify_follow_request/<%= request.id %>" method="post">
-          <input name="query_status" value="rejected" type="hidden">
+          <form action="/modify_follow_request/<%= request.id %>" method="post">
+            <input name="query_status" value="rejected" type="hidden">
 
-          <button type="submit">
-            Reject
-          </button>
-        </form>
-      </li>
-    <% end %>
+            <button type="submit">
+              Reject
+            </button>
+          </form>
+        </li>
+      <% end %>
 
-  </ul>
-</article>
+    </ul>
+  </article>
 
 <% end %>
