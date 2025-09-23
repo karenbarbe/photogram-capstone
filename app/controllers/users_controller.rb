@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action(:authenticate_user!, { :only => [ :index ] })
+  before_action :get_followed_user_ids, only: [ :show, :feed, :discover ]
   before_action :find_matching_user, only: [ :show, :own_photos, :liked_photos, :feed, :discover ]
 
   def index
@@ -29,17 +30,14 @@ class UsersController < ApplicationController
   end
 
   def feed
-   @followed_users = get_followed_user_ids
-   @feed = Photo.where(owner_id: @followed_users).order(created_at: :desc)
+   @feed = Photo.where(owner_id: @followed_users_ids).order(created_at: :desc)
 
     render({ :template => "user_templates/feed" })
   end
 
   def discover
-    @followed_users = get_followed_user_ids
-
     @discover = Photo.joins(:likes)
-                  .where(likes: { fan_id: @followed_users })
+                  .where(likes: { fan_id: @followed_users_ids })
                   .distinct
                   .order(created_at: :desc)
 
@@ -50,7 +48,7 @@ class UsersController < ApplicationController
   private
 
   def get_followed_user_ids
-    FollowRequest.where(status: "accepted", sender_id: current_user.id)
+    @followed_users_ids =FollowRequest.where(status: "accepted", sender_id: current_user.id)
               .pluck(:recipient_id)
   end
 
