@@ -5,7 +5,7 @@ class PhotosController < ApplicationController
     public_users = User.where({ :private => false })
     matching_photos = Photo.where({ :owner_id => public_users })
 
-    @public_photos = matching_photos.order({ :created_at => :desc })
+    @public_photos = matching_photos.includes([ :owner ]).order({ :created_at => :desc })
 
     render({ :template => "photo_templates/index" })
   end
