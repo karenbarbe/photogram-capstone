@@ -55,7 +55,7 @@
     </dd>
 
     <dt>Add a fan</dt>
-    <% if  %>
+    <% if @the_photo.fans.include?(current_user)  %>
 
       <dd>
         <a href="/delete_like/<%= @like_by_current_user.id %>">Unlike</a>

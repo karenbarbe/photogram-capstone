@@ -15,9 +15,9 @@ class PhotosController < ApplicationController
 
     matching_photos = Photo.where({ :id => the_id })
 
-    @the_photo = matching_photos.at(0)
+    @the_photo = matching_photos.first
 
-     @like_by_current_user = Like.where({ :fan_id => current_user.id }).first
+    @like_by_current_user = Like.where({ :fan_id => current_user.id }).first
 
     render({ :template => "photo_templates/show" })
   end
@@ -38,7 +38,7 @@ class PhotosController < ApplicationController
 
   def update
     the_id = params.fetch("path_id")
-    the_photo = Photo.where({ :id => the_id }).at(0)
+    the_photo = Photo.where({ :id => the_id }).first
 
     the_photo.caption = params.fetch("query_caption")
     the_photo.image = params.fetch("query_image")
@@ -54,7 +54,7 @@ class PhotosController < ApplicationController
 
   def destroy
     the_id = params.fetch("path_id")
-    the_photo = Photo.where({ :id => the_id }).at(0)
+    the_photo = Photo.where({ :id => the_id }).first
 
     the_photo.destroy
 
